@@ -1,0 +1,78 @@
+<mxfile host="Electron" modified="2023-07-06T14:53:35.317Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.5.0 Chrome/112.0.5615.204 Electron/24.5.1 Safari/537.36" etag="ExFxBjvwZjSY-JidantR" version="21.5.0" type="device">
+  <diagram name="Seite-1" id="MmnpvZoD795yXCPXtxua">
+    <mxGraphModel dx="2328" dy="1998" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="ikp6VoALzZhhhRvBRKIE-23" target="ikp6VoALzZhhhRvBRKIE-25">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="414" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-23" value="GDAL WARP (las)&lt;br&gt;dtype = float32&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;nodata = f(float32)&lt;br&gt;crs =&amp;nbsp;epsg_input_data.csv&lt;br&gt;resampling = None&lt;br&gt;compression = None" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="243" y="190" width="171" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="ikp6VoALzZhhhRvBRKIE-25" target="ikp6VoALzZhhhRvBRKIE-23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="440" y="260" />
+              <mxPoint x="440" y="265" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-25" value="Data Cleansing" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="466" y="220" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-29" value="PDAL XYZ extraction" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="125" y="-82" width="210" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ikp6VoALzZhhhRvBRKIE-31" target="ikp6VoALzZhhhRvBRKIE-32">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-10" y="215" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-31" value="GDAL WARP&lt;br&gt;dtype = detected rasterio&lt;br&gt;nodata = f(detected_dtype)&lt;br&gt;crs =&amp;nbsp;epsg_input_data.csv&lt;br&gt;resampling = None&lt;br&gt;compression = None" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="50" y="160" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="ikp6VoALzZhhhRvBRKIE-32" target="ikp6VoALzZhhhRvBRKIE-31">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-10" y="265" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-32" value="Data Cleansing" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="-130" y="220" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-35" value="GDAL WARP mosaicing&lt;br&gt;dtype = any&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;nodata = any&lt;br&gt;crs =&amp;nbsp;epsg_input_data.csv&lt;br&gt;resampling = if &amp;lt; 20cm : nearest&lt;br&gt;compression = LZW" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="604.5" y="175" width="185.5" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-44" value="Geowombat nDSM&lt;br&gt;dtype = float32&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;nodata = f(float32)&lt;br&gt;crs = DSM&lt;br&gt;resolution: DSM (!could be smaller than 20cm)&lt;br&gt;resampling = DTM : nearest&lt;br&gt;compression = LZW" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="298.25" y="485" width="185.5" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-49" value="Geowombat stack&lt;br&gt;dtype = uINT16&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;nodata = f(uINT16)&lt;br&gt;crs = nDSM&lt;br&gt;resolution: config.py&lt;br&gt;resampling =&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;ORTHO : nearest&lt;br&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;nDSM : upsampling: cubic&lt;br&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;downsampling :nearest&lt;br&gt;compression = LZW" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="538.25" y="495" width="215.5" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-50" value="LAZ/LAS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="185" y="-120" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-53" value="XYZ" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="185" y="150" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-54" value="TIF/JPX" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="652.25" y="130" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-56" value="DSM/DTM mosaic" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="344" y="420" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ikp6VoALzZhhhRvBRKIE-57" value="nDSM/Ortho&lt;br&gt;mosaic" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="601" y="420" width="90" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
