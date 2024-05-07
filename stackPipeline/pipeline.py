@@ -40,8 +40,8 @@ import default_nodata_dict
 
 ## Manual Control Configuration ###############################################
 
-input_file_pointer_path_manuell = os.path.normpath('Y:\+DeepLearning_Extern\--%--Moritz--%--\Stack_Pipeline_CNN\data\Input\InputFilePointer\Input_24_08_2023-11_48.json')
-crs_metadata_path_manuell = os.path.normpath('Y:\+DeepLearning_Extern\--%--Moritz--%--\Stack_Pipeline_CNN\data\Input\CRSMetadata\epsg_input_data_24_08_2023-11_48.csv')
+input_file_pointer_path_manuell = os.path.normpath('Q:\MnD\Methoden\Code_GitHub\Stack_Pipeline_CNN\data\Input\InputFilePointer\Input_06_05_2024-14_49.json')
+crs_metadata_path_manuell = os.path.normpath('Q:\MnD\Methoden\Code_GitHub\Stack_Pipeline_CNN\data\Input\CRSMetadata\epsg_input_data_06_05_2024-14_49.csv')
 
 ###############################################################################
 
@@ -98,7 +98,7 @@ def main_application(input_file_pointer_path, crs_metadata_path):
                     
                     output_folder_dir = f"{base_out_folder_dir}_{counter}"
                     counter += 1
-                os.makedirs(output_folder_dir)  
+                os.makedirs(output_folder_dir, exist_ok=True)
                 try:
                     
                     ds_dict = input_file_pointer[city][year][desc]
@@ -142,6 +142,8 @@ def main_application(input_file_pointer_path, crs_metadata_path):
                         
                         temp_folder = os.path.join(os.path.dirname(os.getcwd()),
                                                    'data','Temp',folder_name, data_name)
+                        os.makedirs(temp_folder, exist_ok=True)
+
                         if input_file_pointer[city][year][desc][data_name]['tiles']:
                             
                             logger.info(f'Processing {city}-{year}-{desc}: {data_name} tiles')
@@ -315,9 +317,10 @@ def main_application(input_file_pointer_path, crs_metadata_path):
                             res_desc = str(int(dsm_res*100)) + 'cm'
                             
                         filename = f"{city}_{ds_dict['DSM']['year']}_{ds_dict['DSM']['description']}_nDSM_mosaic_{res_desc}.tif"
-                        mosaic_dir['nDSM'] = os.path.join(output_folder_dir, 
-                                                          city, year, filename)
- 
+                        mosaic_dir['nDSM'] = os.path.join(output_folder_dir, filename)
+
+                        os.makedirs(os.path.dirname(mosaic_dir['nDSM']), exist_ok=True)
+
                         generate_nDSM(dsm_file_path = mosaic_dir['DSM'],
                                       dtm_file_path = mosaic_dir['DTM'],
                                       ndsm_output_dir = mosaic_dir['nDSM'],

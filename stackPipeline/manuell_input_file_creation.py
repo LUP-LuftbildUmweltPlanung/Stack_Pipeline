@@ -18,7 +18,7 @@ import pandas as pd
 import datetime
 import numpy as np
 
-from processing_functions import get_epsg_folder
+from processing_functions import get_epsg_folder, save_json_to_file
 
 script_directory = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(script_directory)
@@ -192,15 +192,11 @@ while True:
         "noData": nodata
     }
 
+# generate json filename and location
 timestamp = datetime.datetime.now().strftime("%d_%m_%Y-%H_%M")
 json_filename = os.path.join(root_dir, "data", "Input", "InputFilePointer",f"Input_{timestamp}.json" )
-
-
-
-with open(json_filename, "w") as json_file:
-    json.dump(data, json_file, indent=4)
-
-print(f"JSON data has been saved to \n{json_filename}")
+#save json file
+save_json_to_file(json_filename, data)
 
 
 ## CRS file creation ##########################################################
@@ -211,7 +207,7 @@ column_names = ["city","year","desc","DSM","DTM","nDSM","ORTHO"]  # Replace with
 df_epsg = pd.DataFrame(columns=column_names)
 df_epsg.set_index(["city","year","desc"], inplace=True)
 
-
+# get epsg for each provides dataset
 for city in data.keys():
     for year in data[city].keys():
         for desc in data[city][year].keys():
@@ -228,6 +224,10 @@ for city in data.keys():
                 ds_epsg.append(epsg)
                 
             df_epsg.loc[(city, year, desc),:] = ds_epsg
+
+
 epsg_filename = os.path.join(root_dir, "data", "Input", "CRSMetadata",f"epsg_input_data_{timestamp}.csv" )
+# Ensure the directory exists
+os.makedirs(os.path.dirname(epsg_filename), exist_ok=True)
 df_epsg.to_csv(epsg_filename, index=True, float_format='%.0f')
 print(f"Check the CRSMetadata file and insert any missing epsg code by hand\n {epsg_filename}")

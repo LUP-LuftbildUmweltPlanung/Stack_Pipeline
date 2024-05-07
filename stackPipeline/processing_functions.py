@@ -893,6 +893,15 @@ def create_overview_log(log_in_dir, overview_dir):
         file.write(f'\n\n{failed_tile_counter} Failed tile(s)\n')
         file.write('\n'.join(failed_tiles))
         
+def save_json_to_file(json_filename, data):
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(json_filename), exist_ok=True)
 
+    # Write the JSON data to the file
+    with open(json_filename, "w") as json_file:
+        json.dump(data, json_file, indent=4)
+
+    # Print the path where the JSON file is saved
+    print(f"JSON data has been saved to \n{json_filename}")
 
 logger = my_logger(os.path.join(root_dir,'pipeline.log'), __name__)
