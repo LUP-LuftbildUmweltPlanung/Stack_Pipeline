@@ -4,57 +4,49 @@ Created on Tue May  9 12:42:23 2023
 
 @author: process
 """
+import os
+import sys
 import glob
 import json
-import numpy as np
-import os
-import pandas as pd
-import rasterio
-import shutil
-import subprocess
-import sys
 import time
 import traceback
 from statistics import mode
 
-from processing_functions import (
-    create_overview_log, create_temp_folders, generate_nDSM,
-    get_num_channels_first_tif_in_folder, my_logger, parallel_jpx_tif,
-    parallel_laz_tif, parallel_xyz_tif, setup_metadata_readme, stacking,
-    tiles_to_mosaic, uniform_resolution_check
-)
+import numpy as np
+import pandas as pd
+import rasterio
+import shutil
+import subprocess
 
-# import config.py and nodata dictionarry file. Both contain variables.
-# Modify this files directly if desired
-
+# Get the absolute path of the current script and its parent directory
 script_directory = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(script_directory)
+
+# Add the project root and the current directory to the Python path
+sys.path.append(root_dir)
+sys.path.append(script_directory)
+
+# Now use absolute imports from the project root
+from processing.config import unused_cpus, chunksize
+from processing import default_nodata_dict
+from processing.processing_functions import (
+    create_temp_folders, generate_nDSM,
+    get_num_channels_first_tif_in_folder, my_logger, parallel_jpx_tif,
+    parallel_laz_tif, parallel_xyz_tif, tiles_to_mosaic, uniform_resolution_check
+)
+
+# Change the working directory to the script directory
+# Note: Changing the working directory can have side effects,
+# so be cautious about how this might affect other parts of your code
 os.chdir(script_directory)
-sys.path.append("..")
-from config import unused_cpus, chunksize
-from config import stack_resolution
-import default_nodata_dict
-
-
 
 
 ## Manual Control Configuration ###############################################
 
-input_file_pointer_path_manuell = os.path.normpath('Y:\+DeepLearning_Extern\--%--Moritz--%--\Stack_Pipeline_CNN\data\Input\InputFilePointer\Input_24_08_2023-11_48.json')
-crs_metadata_path_manuell = os.path.normpath('Y:\+DeepLearning_Extern\--%--Moritz--%--\Stack_Pipeline_CNN\data\Input\CRSMetadata\epsg_input_data_24_08_2023-11_48.csv')
+input_file_pointer_path_manuell = os.path.normpath('/data/Input/InputFilePointer/Input_12_06_2024-11_38.json')
+crs_metadata_path_manuell = os.path.normpath('/data/Input/CRSMetadata/epsg_input_data_18_06_2024-15_42.csv')
 
 ###############################################################################
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -98,7 +90,7 @@ def main_application(input_file_pointer_path, crs_metadata_path):
                     
                     output_folder_dir = f"{base_out_folder_dir}_{counter}"
                     counter += 1
-                os.makedirs(output_folder_dir)  
+                os.makedirs(output_folder_dir, exist_ok=True)
                 try:
                     
                     ds_dict = input_file_pointer[city][year][desc]
@@ -142,6 +134,8 @@ def main_application(input_file_pointer_path, crs_metadata_path):
                         
                         temp_folder = os.path.join(os.path.dirname(os.getcwd()),
                                                    'data','Temp',folder_name, data_name)
+                        os.makedirs(temp_folder, exist_ok=True)
+
                         if input_file_pointer[city][year][desc][data_name]['tiles']:
                             
                             logger.info(f'Processing {city}-{year}-{desc}: {data_name} tiles')
@@ -154,7 +148,7 @@ def main_application(input_file_pointer_path, crs_metadata_path):
                             files = glob.glob(input_folder + '/**/*', recursive=True) 
                             split_files = [os.path.splitext(file) for file in files]
                             exts = [split_file[1] for split_file in split_files]
-                            filtered_exts = [ext for ext in exts if ext in [".xyz", ".txt", ".las", ".laz", ".jp2", ".jpg"]]
+                            filtered_exts = [ext for ext in exts if ext in [".xyz", ".txt", ".las", ".laz", ".jp2", ".jpg", ".tif"]]
                             if filtered_exts:
                                 
                                 ext = mode(filtered_exts)
@@ -209,7 +203,20 @@ def main_application(input_file_pointer_path, crs_metadata_path):
                             else:
                                 
                                 output_folder = input_folder
-                                
+
+                            if ext in [".tif"]:
+                                #be sure to get files that have the correct extension
+                                filtered_files = [file for file in files if file.endswith(ext)]
+
+                                if ds_dict[data_name]['noData'] is None:
+                                    # get dtype of Ortho files to mosaic to set nodata
+                                    with rasterio.open(filtered_files[0]) as src:
+                                        ras_dtype = src.dtypes[0]
+
+                                    nodata_out = default_nodata_dict.nodata_values[ras_dtype]
+                                else:
+                                    nodata_out = ds_dict[data_name]['noData']
+
                             if output_folder != input_folder:
                                 
                                 end = time.time()
@@ -272,10 +279,11 @@ def main_application(input_file_pointer_path, crs_metadata_path):
                                 mosaic_dir[data_name] =  mosaic_dir[data_name].replace(
                                     '%channels%', channels)
                                 
-                    
+
                             tiles_to_mosaic(input_folder_dir = output_folder,
                                             output_file_path = mosaic_dir[data_name],
-                                            resolution = resolution, epsg=epsg) 
+                                            resolution = resolution, epsg=epsg,
+                                            nodata_out = f"{nodata_out}")
                             end = time.time()
                             
                             logger.info(f'Mosaicing {city}-{year}-{desc}: {data_name} -- Runtime: {end-start}')
@@ -315,9 +323,10 @@ def main_application(input_file_pointer_path, crs_metadata_path):
                             res_desc = str(int(dsm_res*100)) + 'cm'
                             
                         filename = f"{city}_{ds_dict['DSM']['year']}_{ds_dict['DSM']['description']}_nDSM_mosaic_{res_desc}.tif"
-                        mosaic_dir['nDSM'] = os.path.join(output_folder_dir, 
-                                                          city, year, filename)
- 
+                        mosaic_dir['nDSM'] = os.path.join(output_folder_dir, filename)
+
+                        os.makedirs(os.path.dirname(mosaic_dir['nDSM']), exist_ok=True)
+
                         generate_nDSM(dsm_file_path = mosaic_dir['DSM'],
                                       dtm_file_path = mosaic_dir['DTM'],
                                       ndsm_output_dir = mosaic_dir['nDSM'],

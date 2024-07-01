@@ -1,27 +1,34 @@
 ## GUI maily made with CHATGPT: no proper knowledge of tkinter
 
-import tkinter as tk
-from tkinter import filedialog
-import customtkinter
-import datetime
-import json
-import threading
 import os
+import sys
+import tkinter as tk
+from tkinter import filedialog, messagebox, ttk
+import json
 import pandas as pd
-import numpy as np
-from tkinter import ttk
+import datetime
+import subprocess
+import platform
+import threading
+import customtkinter
 
-
-## own
-
+# Get the absolute path of the current script and its parent directory
 script_directory = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.dirname(script_directory)
+
+# Add the project root to the Python path
+sys.path.append(root_dir)
+
+# Now use absolute imports from the project root
+from processing.processing_functions import get_epsg_folder, save_json_to_file
+import mosaic_pipeline
+
+# Change the working directory to the script directory
+# Note: Changing the working directory can have side effects,
+# so be cautious about how this might affect other parts of your code
 os.chdir(script_directory)
-import pipeline 
-from processing_functions import get_epsg_folder
+
 customtkinter.set_appearance_mode("dark")
-
-
-
 
 
 
@@ -37,10 +44,12 @@ class GUI:
         self.text_args = {"font":("Frutiger", 15, "roman")}
         
         self.root = customtkinter.CTk()
+
         self.root.geometry("900x900")
         self.root.minsize(400, 300)  # Set minimum window size
         self.root.title("Stack Pipeline")
         self.icon_path = "../Images/icon.ico"
+        test = os.path.normpath(self.icon_path)
         self.root.iconbitmap(os.path.normpath(self.icon_path))
         
         
@@ -918,8 +927,6 @@ class GUI:
         [item.insert(0,epsg_fill) for item in entry_list]
         
         [item.configure(font=font_set) for item in entry_list]
-   
-    import textwrap
 
     def create_dashboard_window(self):
         self.destroy_current_window()
