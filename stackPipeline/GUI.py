@@ -11,6 +11,7 @@ import subprocess
 import platform
 import threading
 import customtkinter
+import numpy as np
 
 # Get the absolute path of the current script and its parent directory
 script_directory = os.path.dirname(os.path.abspath(__file__))

@@ -27,12 +27,13 @@ sys.path.append(root_dir)
 sys.path.append(script_directory)
 
 # Now use absolute imports from the project root
-from processing.config import unused_cpus, chunksize
+from processing.config import unused_cpus, chunksize, stack_resolution
 from processing import default_nodata_dict
 from processing.processing_functions import (
     create_temp_folders, generate_nDSM,
     get_num_channels_first_tif_in_folder, my_logger, parallel_jpx_tif,
-    parallel_laz_tif, parallel_xyz_tif, tiles_to_mosaic, uniform_resolution_check
+    parallel_laz_tif, parallel_xyz_tif, tiles_to_mosaic, uniform_resolution_check,
+    create_overview_log, stacking, setup_metadata_readme
 )
 
 # Change the working directory to the script directory
@@ -43,8 +44,10 @@ os.chdir(script_directory)
 
 ## Manual Control Configuration ###############################################
 
-input_file_pointer_path_manuell = os.path.normpath('/data/Input/InputFilePointer/Input_12_06_2024-11_38.json')
-crs_metadata_path_manuell = os.path.normpath('/data/Input/CRSMetadata/epsg_input_data_18_06_2024-15_42.csv')
+input_file_pointer_path_manuell = os.path.normpath(
+    r'Q:\MnD\Methoden\Code_GitHub\Stack_Pipeline_CNN\data\Input\InputFilePointer\Input_01_07_2024-15_34.json')
+crs_metadata_path_manuell = os.path.normpath(
+    r'Q:\MnD\Methoden\Code_GitHub\Stack_Pipeline_CNN\data\Input\CRSMetadata\epsg_input_data_01_07_2024-15_39.csv')
 
 ###############################################################################
 
