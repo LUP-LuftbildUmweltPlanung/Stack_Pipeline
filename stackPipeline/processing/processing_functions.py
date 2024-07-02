@@ -782,7 +782,7 @@ def create_temp_folders(json_file_path):
 
 def setup_metadata_readme(out_dir, creator='noinfo', city='noinfo', year='',
                           description=''):
-    with open(os.path.join(root_dir,'templates/metadata_README.md'), 'r') as reader:
+    with open(os.path.join(root_dir,'stackPipeline/templates/metadata_README.md'), 'r') as reader:
         lines = reader.readlines()
     # try except to avoid overwriting using write mode x
     try:
