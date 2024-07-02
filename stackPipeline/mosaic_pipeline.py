@@ -44,9 +44,9 @@ os.chdir(script_directory)
 ## Manual Control Configuration ###############################################
 
 input_file_pointer_path_manuell = os.path.normpath(
-    r'Q:\MnD\Methoden\Code_GitHub\Stack_Pipeline_CNN\data\Input\InputFilePointer\Input_27_06_2024-15_08.json')
+    r'Q:\MnD\Methoden\Code_GitHub\Stack_Pipeline_CNN\data\Input\InputFilePointer\Input_27_06_2024-13_43.json')
 crs_metadata_path_manuell = os.path.normpath(
-    r'Q:\MnD\Methoden\Code_GitHub\Stack_Pipeline_CNN\data\Input\CRSMetadata\epsg_input_data_27_06_2024-15_08.csv')
+    r'Q:\MnD\Methoden\Code_GitHub\Stack_Pipeline_CNN\data\Input\CRSMetadata\epsg_input_data_27_06_2024-13_43.csv')
 
 
 ###############################################################################
